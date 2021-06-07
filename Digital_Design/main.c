@@ -5,14 +5,32 @@
  * Author : Jan
  */ 
 
-#include <avr/io.h>
 
+#include "main.h"
+
+
+
+
+volatile char flag_uart = 0;
+volatile int uart_cnt = 0;
+char UARTBuffer[100] = {0};
+	
 
 int main(void)
 {
-    /* Replace with your application code */
     while (1) 
     {
     }
 }
 
+
+
+
+
+//Service routine for UART receive vector
+ISR(USART0_RX_vect){
+	if((UARTBuffer[uart_cnt++] = UDR0) == '\n'){
+		uart_cnt = 0;
+		flag_uart = 1;
+	}
+}
