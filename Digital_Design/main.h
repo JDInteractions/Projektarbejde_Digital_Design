@@ -9,6 +9,7 @@
 
 #ifndef MAIN_H_
 #define MAIN_H_
+#define datasize 1007
 
 // ================================================
 // Includes
@@ -23,6 +24,9 @@
 #include "USART.h"
 #include "ADC.h"
 #include "Timer.h"
+#include "I2C.c"
+#include "ssd1306.c"
+
 
 
 // ================================================

@@ -29,6 +29,16 @@ void init_uart(unsigned int  ubrr){
 	
 }
 
+
+void init_uart1(unsigned int  ubrr){
+	
+	UCSR1A = (1<<U2X1);					//Double speed half-duplex
+	UCSR1B |= (1<<RXEN1) | (1<<TXEN1);
+	UCSR1C |= (1<<UCSZ10) | (1<<UCSZ11);
+	UBRR1H = (unsigned char)(ubrr>>8);
+	UBRR1L = (unsigned char)ubrr;
+	
+}
 //Returns 8-bit from UART receive buffer
 char getCharUSART(void){
 	
@@ -36,12 +46,20 @@ char getCharUSART(void){
 	return UDR0;
 }
 
-//Transmits 8-bit 
+//Transmits 8-bit(usart0)
 void putCharUSART(char tx){
 	
 	while(!(UCSR0A & (1<<UDRE0))); //continues when transmit buffer is empty
 	UDR0 = tx;
 }
+
+//Transmits 8-bit(usart1)
+void putCharUSART1(char tx){
+	
+	while(!(UCSR1A & (1<<UDRE1))); //continues when transmit buffer is empty
+	UDR1 = tx;
+}
+
 
 //Transmits string
 //Argument: array with data
@@ -50,6 +68,15 @@ void transmitStrUSART(char * ptr){
 	while(*ptr){
 		putCharUSART(*ptr);
 		ptr ++; 
+	}
+}
+//Transmits string (USART1)
+//Argument: array with data
+void transmitStrUSART1(char * ptr){
+	
+	while(*ptr){
+		putCharUSART1(*ptr);
+		ptr ++;
 	}
 }
 
