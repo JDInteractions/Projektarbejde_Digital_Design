@@ -17,7 +17,7 @@
 // ================================================
 // Defines/macros
 // ================================================
-#define BAUD	19200
+#define BAUD	115200
 #define UBBR_S	F_CPU/16/BAUD-1		//Half Duplex single speed
 #define UBBR_D	F_CPU/8/BAUD-1		//Half Duplex double speed
 
@@ -26,10 +26,14 @@
 // Functions
 // ================================================
 extern void init_uart(unsigned int  ubrr);
+extern void init_uart1(unsigned int ubrr);
 extern void init_uart_interrupt(unsigned int  ubrr);
 extern char getCharUSART(void);
 extern void putCharUSART(char tx);
+extern void putCharUSART1(char tx);
 extern void transmitStrUSART(char * ptr);
+extern void transmitStrUSART1(char * ptr);
+
 extern int receiveStrUSART(char * buffer);
 extern void USART_Flush();
 
