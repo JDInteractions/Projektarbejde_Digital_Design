@@ -10,12 +10,12 @@
 #include "Timer.h"
 
 
-//Initialize hardware timer 1
+//Initialize hardware 16-bit timer 1
 void init_timer1(){
-	TCCR1B |= (1<<CS11) | (1<<CS10);	//Prescaler /64
+	TCCR1B |= (1<<CS11) | (1<<CS10);	//Prescaler: 64
 	TCCR1B |= (1<<WGM12);				//Mode: CTC
-	OCR1A =	12;							//Compare value
-	OCR1B =	12;							//Compare value
+	OCR1A =	12;							//Compare value 16-bit
+	OCR1B =	12;							//Compare value 16-bit
 	TIMSK1 |= (1<<OCIE1B);				//Interrupt when TCNT1 = OCR3B
 }
 	

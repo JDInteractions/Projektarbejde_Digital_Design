@@ -9,17 +9,16 @@
 
 //Initialize ADC with 125kHz input clock
 void init_adc(char interrupt){
-	ADCSRA |= (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0); //125kHz input clock to ADC (div factor 128)
-	ADCSRB |= (1<<ADTS2) | (1<<ADTS0);				//Auto Trigger source: (Timer/Counter1 Compare Match B)
-	ADCSRA |= (1<<ADATE);							//Enable auto trigger mode
-	ADCSRA |= (1<<ADEN);							//Enable ADC
-	if(interrupt) ADCSRA |= (1<<ADIE);				//Enable interrupt
-
+	ADCSRA |= (1<<ADPS2);						//1MHz input clock to ADC (div factor 16)
+	ADCSRB |= (1<<ADTS2) | (1<<ADTS0);			//Auto Trigger source: (Timer/Counter1 Compare Match B)
+	ADCSRA |= (1<<ADATE);						//Enable auto trigger mode
+	ADCSRA |= (1<<ADEN);						//Enable ADC
+	if(interrupt) ADCSRA |= (1<<ADIE);			//Enable interrupt
 }
 
 //Returns 10-bit sampled value from ADC.
 unsigned int get_sample(char channel){
-	ADMUX = channel;		//Select ADC channel
+	ADMUX |= channel;		//Select ADC channel
 	ADMUX |= (1<<REFS0);	//Select AVCC as voltage reference
 	
 	DIDR0 = (1<<channel);
@@ -36,7 +35,8 @@ unsigned int get_sample(char channel){
 //Initiates ADC on specified channel and starts sampling. Used with interrupt
 void startADCSampling(char channel){
 	ADMUX = channel;		//Select ADC channel
-	//Using external 3.3V reference on AREF		 
+	//Using external 3.3V reference on AREF	
+	ADMUX |= (1<<ADLAR);	//Left adjust ADC conversion result, since only ADCH is read because only 8-bit precision is needed	 
 	DIDR0 = (1<<channel);	//Disabling unused inputs to save power
 	DIDR0 = ~DIDR0;
 	DIDR1 = 0xFF;			//Disable DIDR1

@@ -4,7 +4,11 @@
 
 ADC.c
 
+I2C.c
+
 main.c
+
+ssd1306.c
 
 Timer.c
 
