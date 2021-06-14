@@ -5,11 +5,7 @@
  * Author : Jan & Lars
  */ 
 
-#include <avr/io.h>
-
-
-
-
+#include "main.h">
 
 
 volatile char flag_uart = 0;
